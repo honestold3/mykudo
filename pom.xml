@@ -1,0 +1,441 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.wq</groupId>
+  <artifactId>mykudo</artifactId>
+  <version>1.0</version>
+
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <kudu.version>1.5.0</kudu.version>
+    <flink.version>1.3.2</flink.version>
+    <spark.version>2.2.1</spark.version>
+    <java.version>1.8</java.version>
+    <scala.binary.version>2.11</scala.binary.version>
+    <scala.version>2.11.8</scala.version>
+    <hadoop.version>2.7.1</hadoop.version>
+    <junit.version>3.8.1</junit.version>
+    <scalatest.version>2.2.0</scalatest.version>
+    <maven.shade.version>3.1.0</maven.shade.version>
+    <maven.compiler.version>3.7.0</maven.compiler.version>
+    <scala.maven.version>3.3.1</scala.maven.version>
+    <jol.version>0.6</jol.version>
+    <mysql.version>5.1.40</mysql.version>
+    <PermGen>64m</PermGen>
+    <MaxPermGen>512m</MaxPermGen>
+    <CodeCacheSize>512m</CodeCacheSize>
+  </properties>
+
+  <repositories>
+    <repository>
+      <id>scala-tools.org</id>
+      <name>Scala-Tools Maven2 Repository</name>
+      <url>http://scala-tools.org/repo-releases</url>
+    </repository>
+  </repositories>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>scala-tools.org</id>
+      <name>Scala-Tools Maven2 Repository</name>
+      <url>http://scala-tools.org/repo-releases</url>
+    </pluginRepository>
+  </pluginRepositories>
+
+  <dependencies>
+    <!-- start scala -->
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-library</artifactId>
+      <version>${scala.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-compiler</artifactId>
+      <version>${scala.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-reflect</artifactId>
+      <version>${scala.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scalap</artifactId>
+      <version>${scala.version}</version>
+    </dependency>
+    <!-- end scala-->
+
+    <!-- start hadoop -->
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-hdfs</artifactId>
+      <version>${hadoop.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-client</artifactId>
+      <version>${hadoop.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>javax.servlet</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>javax.servlet.jsp</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.mortbay.jetty</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-common</artifactId>
+      <version>${hadoop.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>javax.servlet</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>javax.servlet.jsp</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.mortbay.jetty</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-hdfs</artifactId>
+      <version>${hadoop.version}</version>
+      <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.mortbay.jetty</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>javax.servlet</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>com.google.guava</groupId>
+          <artifactId>guava</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <!-- end hadoop-->
+
+    <!--start flink-->
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-java</artifactId>
+      <version>${flink.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-scala_${scala.binary.version}</artifactId>
+      <version>${flink.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-streaming-java_${scala.binary.version}</artifactId>
+      <version>${flink.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-streaming-scala_${scala.binary.version}</artifactId>
+      <version>${flink.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-gelly_${scala.binary.version}</artifactId>
+      <version>${flink.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-table_${scala.binary.version}</artifactId>
+      <version>${flink.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-gelly-scala_${scala.binary.version}</artifactId>
+      <version>${flink.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-connector-elasticsearch_${scala.binary.version}</artifactId>
+      <version>${flink.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-connector-elasticsearch2_${scala.binary.version}</artifactId>
+      <version>${flink.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-connector-kafka-0.10_${scala.binary.version}</artifactId>
+      <version>${flink.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-connector-filesystem_${scala.binary.version}</artifactId>
+      <version>${flink.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-statebackend-rocksdb_${scala.binary.version}</artifactId>
+      <version>${flink.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-cep-scala_${scala.binary.version}</artifactId>
+      <version>${flink.version}</version>
+    </dependency>
+
+    <!-- end flink -->
+
+    <!-- start spark -->
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-core_${scala.binary.version}</artifactId>
+      <version>${spark.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>javax.servlet</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-sql_${scala.binary.version}</artifactId>
+      <version>${spark.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-graphx_${scala.binary.version}</artifactId>
+      <version>${spark.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-streaming-kafka-0-10_${scala.binary.version}</artifactId>
+      <version>${spark.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <!-- end spark -->
+
+    <!-- start kudu -->
+    <dependency>
+      <groupId>org.apache.kudu</groupId>
+      <artifactId>kudu-client</artifactId>
+      <version>${kudu.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.kudu</groupId>
+      <artifactId>kudu-spark2_${scala.binary.version}</artifactId>
+      <version>${kudu.version}</version>
+    </dependency>
+    <!-- end kudu-->
+
+    <!-- start scalatest -->
+    <dependency>
+      <groupId>org.scalatest</groupId>
+      <artifactId>scalatest_${scala.binary.version}</artifactId>
+      <version>${scalatest.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <!-- end scalatest-->
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.4</version>
+      <scope>test</scope>
+    </dependency>
+
+  </dependencies>
+
+
+  <build>
+    <!--<finalName>kankan</finalName>-->
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven.compiler.version}</version>
+        <configuration>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>net.alchim31.maven</groupId>
+        <artifactId>scala-maven-plugin</artifactId>
+        <version>${scala.maven.version}</version>
+        <!--
+        <executions>
+            <execution>
+                <goals>
+                    <goal>compile</goal>
+                    <goal>testCompile</goal>
+                </goals>
+            </execution>
+        </executions>
+        -->
+        <executions>
+          <!-- Run scala compiler in the process-resources phase, so that dependencies on
+              scala classes can be resolved later in the (Java) compile phase -->
+          <execution>
+            <id>scala-compile-first</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+          </execution>
+
+          <!-- Run scala compiler in the process-test-resources phase, so that dependencies on
+               scala classes can be resolved later in the (Java) test-compile phase -->
+          <execution>
+            <id>scala-test-compile</id>
+            <phase>process-test-resources</phase>
+            <goals>
+              <goal>testCompile</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <jvmArgs>
+            <jvmArg>-Xms128m</jvmArg>
+            <jvmArg>-Xmx512m</jvmArg>
+          </jvmArgs>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>${maven.shade.version}</version>
+        <executions>
+          <!-- Run shade goal on package phase -->
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <artifactSet>
+                <excludes>
+                  <!-- This list contains all dependencies of flink-dist
+                  Everything else will be packaged into the fat-jar
+                  -->
+                  <exclude>org.apache.spark:spark-*</exclude>
+
+                  <exclude>org.apache.flink:flink-*</exclude>
+
+                  <exclude>org.apache.hadoop:hadoop-*</exclude>
+
+
+                  <!-- Also exclude very big transitive dependencies of Flink
+
+                  WARNING: You have to remove these excludes if your code relies on other
+                  versions of these dependencies.
+
+
+
+                  <exclude>org.scala-lang:scala-library</exclude>
+                  <exclude>org.scala-lang:scala-compiler</exclude>
+                  <exclude>org.scala-lang:scala-reflect</exclude>
+                   -->
+                  <exclude>com.amazonaws:aws-java-sdk</exclude>
+                  <exclude>com.typesafe.akka:akka-actor_*</exclude>
+                  <exclude>com.typesafe.akka:akka-remote_*</exclude>
+                  <exclude>com.typesafe.akka:akka-slf4j_*</exclude>
+                  <exclude>io.netty:netty-all</exclude>
+                  <exclude>io.netty:netty</exclude>
+                  <exclude>commons-fileupload:commons-fileupload</exclude>
+                  <exclude>org.apache.avro:avro</exclude>
+                  <exclude>commons-collections:commons-collections</exclude>
+                  <exclude>com.thoughtworks.paranamer:paranamer</exclude>
+                  <exclude>org.xerial.snappy:snappy-java</exclude>
+                  <exclude>org.apache.commons:commons-compress</exclude>
+                  <exclude>org.tukaani:xz</exclude>
+                  <exclude>com.esotericsoftware.kryo:kryo</exclude>
+                  <exclude>com.esotericsoftware.minlog:minlog</exclude>
+                  <exclude>org.objenesis:objenesis</exclude>
+                  <exclude>com.twitter:chill_*</exclude>
+                  <exclude>com.twitter:chill-java</exclude>
+                  <exclude>com.twitter:chill-avro_*</exclude>
+                  <exclude>com.twitter:chill-bijection_*</exclude>
+                  <exclude>com.twitter:bijection-core_*</exclude>
+                  <exclude>com.twitter:bijection-avro_*</exclude>
+                  <exclude>commons-lang:commons-lang</exclude>
+                  <exclude>junit:junit</exclude>
+                  <exclude>de.javakaffee:kryo-serializers</exclude>
+                  <!--<exclude>joda-time:joda-time</exclude>-->
+                  <exclude>org.apache.commons:commons-lang3</exclude>
+                  <exclude>org.slf4j:slf4j-api</exclude>
+                  <exclude>org.slf4j:slf4j-log4j12</exclude>
+                  <exclude>log4j:log4j</exclude>
+                  <exclude>org.apache.commons:commons-math</exclude>
+                  <exclude>org.apache.sling:org.apache.sling.commons.json</exclude>
+                  <exclude>commons-logging:commons-logging</exclude>
+                  <exclude>commons-codec:commons-codec</exclude>
+                  <exclude>com.fasterxml.jackson.core:jackson-core</exclude>
+                  <exclude>com.fasterxml.jackson.core:jackson-databind</exclude>
+                  <exclude>com.fasterxml.jackson.core:jackson-annotations</exclude>
+                  <exclude>stax:stax-api</exclude>
+                  <exclude>com.typesafe:config</exclude>
+                  <exclude>org.uncommons.maths:uncommons-maths</exclude>
+                  <exclude>com.github.scopt:scopt_*</exclude>
+                  <exclude>commons-io:commons-io</exclude>
+                  <exclude>commons-cli:commons-cli</exclude>
+                </excludes>
+              </artifactSet>
+              <filters>
+                <filter>
+                  <artifact>org.apache.flink:*</artifact>
+                  <excludes>
+                    <!-- exclude shaded google but include shaded curator -->
+                    <exclude>org/apache/flink/shaded/com/**</exclude>
+                    <exclude>web-docs/**</exclude>
+                  </excludes>
+                </filter>
+                <filter>
+                  <!-- Do not copy the signatures in the META-INF folder.
+                  Otherwise, this might cause SecurityExceptions when using the JAR. -->
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>
+                  </excludes>
+                </filter>
+              </filters>
+              <transformers>
+                <!-- add Main-Class to manifest file -->
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <!--<mainClass>org.wq.mvn4flink.dataset.WordCount</mainClass>-->
+                  <mainClass>org.wq.App</mainClass>
+                </transformer>
+              </transformers>
+              <createDependencyReducedPom>false</createDependencyReducedPom>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+    </plugins>
+  </build>
+
+
+</project>
