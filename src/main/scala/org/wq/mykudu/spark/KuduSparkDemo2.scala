@@ -95,7 +95,9 @@ object KuduSparkDemo2 {
 
     sqlContext.read.options(kuduOptions).kudu.createTempView(kuduTableName)
 
-    val customerNameAgeDF = sqlContext.sql(s"""SELECT name, age FROM $kuduTableName WHERE age >= 20""")
+    //val customerNameAgeDF = sqlContext.sql(s"""SELECT name, age FROM $kuduTableName WHERE age >= 20""")
+
+    val customerNameAgeDF = sqlContext.sql(s"""SELECT name, age FROM $kuduTableName""")
 
     customerNameAgeDF.show()
 
