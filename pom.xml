@@ -256,6 +256,20 @@
     </dependency>
     <!-- end scalatest-->
 
+    <!-- start link-kudu-connector -->
+    <dependency>
+      <groupId>es.accenture</groupId>
+      <artifactId>flink-kudu-connector</artifactId>
+      <version>1.0</version>
+      <exclusions>
+        <exclusion>
+          <groupId>java.es.accenture.flink</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <!-- end link-kudu-connector -->
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
