@@ -32,6 +32,7 @@ object KuduSparkDemo {
     import sqlContext.implicits._
 
     val km = "quickstart.cloudera:7051"
+
     val kuduMasters = List(km).mkString(",")
 
     val kuduContext = new KuduContext(kuduMasters,sc)
@@ -51,9 +52,9 @@ object KuduSparkDemo {
 
     // 4. Specify any further options
     val kuduTableOptions = new CreateTableOptions()
-    kuduTableOptions.
-      setRangePartitionColumns(List("name").asJava).
-      setNumReplicas(1)
+    kuduTableOptions
+      .setRangePartitionColumns(List("name").asJava)
+      .setNumReplicas(1)
 
     // Check if the table exists, and drop it if it does
     if (kuduContext.tableExists(kuduTableName)) {

@@ -97,7 +97,7 @@ object KuduSparkDemo2 {
 
     //val customerNameAgeDF = sqlContext.sql(s"""SELECT name, age FROM $kuduTableName WHERE age >= 20""")
 
-    val customerNameAgeDF = sqlContext.sql(s"""SELECT name, age FROM $kuduTableName""")
+    val customerNameAgeDF = sqlContext.sql(s"""SELECT name, age,city FROM $kuduTableName""")
 
     customerNameAgeDF.show()
 
